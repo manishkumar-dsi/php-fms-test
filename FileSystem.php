@@ -36,7 +36,23 @@ class FileSystem implements FileSystemInterface {
 	* @return FileInterface
 	*/
 	public function renameFile(FileInterface $file, $newName) {
+		$oldName = $file->getName();
+		// Check Old name and New Name is same
+		if ($oldName == $newName) {
+			return 'SAME_NAME';
+		}
+		// Check old file is existing or not
+		$status = file_exists($oldName);
+		if (!$status) {
+			return 'FILE_MISSING';
+		}
 
+		//Rename
+		$status = rename($oldName, $newName);
+		if ($status) {
+			return 'SUCCESS';
+		}
+		return 'FAIL';
 	}
 
 	/**
