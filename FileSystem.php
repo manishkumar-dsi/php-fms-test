@@ -61,7 +61,20 @@ class FileSystem implements FileSystemInterface {
 	* @return bool
 	*/
 	public function deleteFile(FileInterface $file) {
+		$filePath = $file->getName();
 
+		//check file exist or not
+		$status = file_exists($filePath);
+		if (!$status) {
+			return 'FILE_MISSING';
+		}
+		$status = unlink($filePath);
+		
+		if ($status) {
+			return 'SUCCESS';	
+		} else {
+			return 'FAIL';
+		}
 	}
 
 	/**

@@ -7,6 +7,15 @@ Commit 2
 --------------------
 File renaming
 Command : 
-php run.php oldFileName newFileName FileFolderPath
+php run.php renameFile oldFileName newFileName FileFolderPath
 
 Ex : php run.php renameFile test2 test .
+
+Commit 3
+--------------------
+File Delete
+
+Command : 
+php run.php deleteFile path fileName
+
+Ex : php run.php deleteFile . test

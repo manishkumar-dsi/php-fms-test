@@ -47,11 +47,29 @@ switch ($command) {
 			exit();
 		}
 		if (!isset($path) || is_null($path)) {
-			echo "\nPlease provide file path name.\n";
+			echo "\nPlease provide file path.\n";
 			exit();
 		}
+	
+		$oldFilePath = $path . '/' . $oldFileName;
+		$newFilePath = $path . '/' . $newFileName;
 
-		renameFile($oldFileName, $newFileName, $path);
+		renameFile($oldFilePath, $newFilePath);
+		break;
+	case 'deleteFile':
+		$fileName 	= isset($argv[2]) ? $argv[2] : null;
+		$path 		= isset($argv[3]) ? $argv[3] : null;
+		
+		if (!isset($fileName) || is_null($fileName)) {
+			echo "\nPlease provide file name.\n";
+			exit();
+		}
+		if (!isset($path) || is_null($path)) {
+			echo "\nPlease provide file path.\n";
+			exit();
+		}
+		$fullPath = $path . '/' . $fileName;
+		deleteFile($fullPath);
 		break;
 	
 	default:
@@ -68,17 +86,16 @@ function createFile($filename, $path) {
 	$fileSystemObj->createFile($fileObj,$folderObj);
 }
 
-function renameFile($old, $new, $path) {
+function renameFile($oldFile, $newFile) {
 	
-	$oldFile = $path . '/' . $old;
-	$newFile = $path . '/' . $new;
-
-	// Rename the file
 	$fileObj = new File();
 	$fileObj->setName($oldFile);
 
 	$fileSystemObj = new FileSystem();
+
+	// Rename the file
 	$status = $fileSystemObj->renameFile($fileObj, $newFile);
+
 	if ($status == 'SAME_NAME') {
 		echo "\nOld name and New name is same. Please provide different new file name.\n";
 		return;
@@ -95,5 +112,25 @@ function renameFile($old, $new, $path) {
 	}
 }
 
+function deleteFile($filePath) {
+	$fileObj = new File();
+	$fileObj->setName($filePath);
+
+	$fileSystemObj = new FileSystem();
+
+	// Rename the file
+	$status = $fileSystemObj->deleteFile($fileObj);
+
+	if ($status == 'FILE_MISSING') {
+		echo "\n Given File does not exist. Please check your File Path.\n";
+		return;
+	}
+	
+	if ($status == 'SUCCESS') {
+		echo "\n File has been deleted successfully. \n";
+	} else {
+		echo "\n File could not be deleted. Please try again.\n";
+	}
+}
 
 ?>
