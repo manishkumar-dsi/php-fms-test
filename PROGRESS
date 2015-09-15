@@ -2,3 +2,11 @@ Commit 1
 --------------------
 1) Class implementation for Interface (Adding File.php, Folder.php, FileSystem.php)
 2) Adding run.php . This will take the details from command line and do the action 
+
+Commit 2
+--------------------
+File renaming
+Command : 
+php run.php oldFileName newFileName FileFolderPath
+
+Ex : php run.php renameFile test2 test .
